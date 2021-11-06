@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  app:
+    image: esron/systranca-server:1.0
+    ports:
+      - 80:3000
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_HOST=database
+      - DB_PORT=27017
+      - DB_NAME=systranca
+    depends_on:
+      - database
+      - mosquitto
+    restart: always
+  database:
+    image: mongo:4.4.10
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
+    volumes:
+      - dbdata:/data/db
+    ports:
+      - 27017:27017
+    restart: always
+  mosquitto:
+    image: eclipse-mosquitto:2.0.13
+    volumes:
+      - mosquittodata:/mosquitto/data
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+    ports:
+      - 1883:1883
+    restart: always
+
+volumes:
+  dbdata:
+  mosquittodata:
