@@ -1,0 +1,27 @@
+- name: Create the app folder
+  file:
+    path: /home/{{ ansible_user }}/systranca
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    state: directory
+    mode: '0755'
+
+- name: Setup mosquitto config file
+  copy:
+    src: ../files/mosquitto.conf
+    dest: /home/{{ ansible_user }}/systranca/mosquitto.conf
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0644'
+
+- name: Setup docker-compose.yml
+  copy:
+    src: ../files/docker-compose.yml
+    dest: /home/{{ ansible_user }}/systranca/docker-compose.yml
+    owner: '{{ ansible_user }}'
+    group: '{{ ansible_user }}'
+    mode: '0644'
+
+- name: Start containers
+  community.docker.docker_compose:
+    project_src: /home/{{ ansible_user }}/systranca
