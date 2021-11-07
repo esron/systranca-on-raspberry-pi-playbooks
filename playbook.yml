@@ -4,6 +4,8 @@
   pre_tasks:
     - name: Install a list of packages
       become: yes
+      tags:
+        - setup
       apt:
         name: "{{ pkgstoinstall }}"
         update_cache: yes
@@ -11,6 +13,8 @@
 
     - name: Remove python-configparser package
       become: yes
+      tags:
+        - setup
       apt:
         name: python-configparser
         state: absent
@@ -18,3 +22,9 @@
   roles:
     - role: docker
       become: yes
+      tags:
+        - setup
+    - role: app
+      become_user: '{{ ansible_user }}'
+      tags:
+        - deploy
