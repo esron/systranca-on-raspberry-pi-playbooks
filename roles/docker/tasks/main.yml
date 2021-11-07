@@ -1,32 +1,18 @@
 - name: get docker convenience script
   shell: curl -fsSL https://get.docker.com -o get-docker.sh
   args:
-    creates: /home/pi/get-docker.sh
+    creates: /home/{{ ansible_user }}/get-docker.sh
 
 - name: install docker
-  shell: sh /home/pi/get-docker.sh
+  shell: sh /home/{{ ansible_user }}/get-docker.sh
   args:
     creates: /usr/bin/docker
 
 - name: make pi user execute docker commands
   user:
-    name: pi
+    name: '{{ ansible_user }}'
     groups:
       - docker
-      - adm
-      - dialout
-      - cdrom
-      - sudo
-      - audio
-      - video
-      - plugdev
-      - games
-      - users
-      - input
-      - netdev
-      - gpio
-      - i2c
-      - spi
     append: yes
 
 - name: install docker-compose
