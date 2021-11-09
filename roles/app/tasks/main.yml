@@ -9,7 +9,7 @@
 - name: Setup mosquitto config file
   become: yes
   copy:
-    src: ../files/mosquitto.conf
+    src: mosquitto.conf
     dest: /home/{{ ansible_user }}/systranca/mosquitto.conf
     # This is the mosquitto user if you don't set to this the container will
     # change it for you and your playbook will fail every second time
@@ -19,7 +19,7 @@
 
 - name: Setup docker-compose.yml
   copy:
-    src: ../files/docker-compose.yml
+    src: docker-compose.yml
     dest: /home/{{ ansible_user }}/systranca/docker-compose.yml
     owner: '{{ ansible_user }}'
     group: '{{ ansible_user }}'
