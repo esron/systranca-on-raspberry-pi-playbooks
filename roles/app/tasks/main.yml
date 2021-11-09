@@ -7,11 +7,14 @@
     mode: '0755'
 
 - name: Setup mosquitto config file
+  become: yes
   copy:
     src: ../files/mosquitto.conf
     dest: /home/{{ ansible_user }}/systranca/mosquitto.conf
-    owner: '{{ ansible_user }}'
-    group: '{{ ansible_user }}'
+    # This is the mosquitto user if you don't set to this the container will
+    # change it for you and your playbook will fail every second time
+    owner: 1883
+    group: 1883
     mode: '0644'
 
 - name: Setup docker-compose.yml
