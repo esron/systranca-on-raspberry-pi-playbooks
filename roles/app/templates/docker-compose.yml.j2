@@ -6,8 +6,8 @@ services:
     ports:
       - 80:3000
     environment:
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
+      - DB_USER={{ db_user }}
+      - DB_PASS={{ db_password }}
       - DB_HOST=database
       - DB_PORT=27017
       - DB_NAME=systranca
@@ -18,8 +18,8 @@ services:
   database:
     image: mongo:4.4.10
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
+      MONGO_INITDB_ROOT_USERNAME: {{ db_user }}
+      MONGO_INITDB_ROOT_PASSWORD: {{ db_password }}
     volumes:
       - dbdata:/data/db
     ports:
